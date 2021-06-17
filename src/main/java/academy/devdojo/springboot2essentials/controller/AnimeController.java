@@ -2,6 +2,7 @@ package academy.devdojo.springboot2essentials.controller;
 
 import academy.devdojo.springboot2essentials.Util.DateUtil;
 import academy.devdojo.springboot2essentials.domain.Anime;
+import academy.devdojo.springboot2essentials.service.AnimeService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,17 +15,18 @@ import java.util.List;
 import static java.util.Arrays.asList;
 
 @RestController
-@RequestMapping("anime")
+@RequestMapping("animes")
 @Log4j2
 @AllArgsConstructor
 public class AnimeController {
 
-    private DateUtil dateUtil;
+    private final DateUtil dateUtil;
+    private final AnimeService animalService;
 
-    @GetMapping(path = "list")
+    @GetMapping
     public List<Anime> list(){
         log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
-        return asList(new Anime("DBZ"),new Anime("Berserk"));
+        return animalService.listAll();
     }
 
 }
