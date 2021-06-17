@@ -1,17 +1,25 @@
 package academy.devdojo.springboot2essentials.service;
 
 import academy.devdojo.springboot2essentials.domain.Anime;
-import academy.devdojo.springboot2essentials.repository.AnimeRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-
-import static java.util.Arrays.asList;
 
 @Service
 public class AnimeService {//implements AnimeRepository {
     //@Override
+    private List<Anime> animes = List.of(new Anime(1l,"DBZ"),new Anime(2l,"Berserk"));
+
     public List<Anime> listAll(){
-        return asList(new Anime(1l,"DBZ"),new Anime(2l,"Berserk"));
+        return animes;
+    }
+
+    public Anime findById(long id){
+        return animes.stream()
+                .filter(anime -> anime.getId().equals(id))
+                .findFirst()
+                .orElseThrow(()-> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Anime not found"));
     }
 }
