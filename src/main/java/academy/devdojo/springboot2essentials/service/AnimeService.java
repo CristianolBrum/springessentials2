@@ -38,4 +38,9 @@ public class AnimeService {//implements AnimeRepository {
     public void delete (Long id){
         animes.remove(findById(id));
     }
+
+    public void alterar(Anime anime) {
+        delete(anime.getId());
+        animes.add(anime);
+    }
 }
